@@ -82,42 +82,42 @@ export const getBlogPostRes = async (entryUrl) => {
 
 export const getAllComposableHeros = async (entryUrl) => {
   const response = await Stack.getEntryByUrl({
-    contentTypeUid: "superhero_gallery_page",
+    contentTypeUid: "superhero_gallery_page_2",
     entryUrl,
-    referenceFieldPath: ["characters"],
-    jsonRtePath: ["characters.description"],
+    referenceFieldPath: ["characters2"],
+    jsonRtePath: ["characters2.description"],
   });
 
-  liveEdit && addEditableTags(response, "superhero_gallery_page", true);
+  liveEdit && addEditableTags(response, "superhero_gallery_page_2", true);
   return response[0];
 };
 
 export const getComposableHeroHomeWorld = async () => {
   const response = await Stack.getEntry({
-    contentTypeUid: "character",
-    // referenceFieldPath: ["home_world"],
+    contentTypeUid: "character2",
+    // referenceFieldPath: ["home_world2"],
     jsonRtePath: ["description"],
   });
   liveEdit &&
-    response[0].forEach((entry) => addEditableTags(entry, "character", true));
+    response[0].forEach((entry) => addEditableTags(entry, "character2", true));
   return response;
 };
 
 export const getComposableHeroSingleRes = async (entryUrl) => {
   const response = await Stack.getEntryByUrl({
-    contentTypeUid: "character",
+    contentTypeUid: "character2",
     entryUrl,
-    referenceFieldPath: ["home_world"],
+    referenceFieldPath: ["home_world2"],
     jsonRtePath: ["description"],
   });
 
-  liveEdit && addEditableTags(response[0], "character", true);
+  liveEdit && addEditableTags(response[0], "character2", true);
   return response[0];
 };
 
 export const getComposableHeroGallery = async (entryUrl) => {
   const response = await Stack.getEntryByUrl({
-    contentTypeUid: "superhero_landing_page",
+    contentTypeUid: "superhero_landing_page_2",
     entryUrl,
     referenceFieldPath: ["modular_blocks.super_heroes_gallery.heroes"],
     jsonRtePath: [
@@ -133,11 +133,11 @@ export const getComposableHeroGallery = async (entryUrl) => {
 
 export const getSuperheroGalleryRes = async () => {
   const response = await Stack.getEntry({
-    contentTypeUid: "character",
+    contentTypeUid: "character2",
     jsonRtePath: ["description"],
   });
 
   liveEdit &&
-    response[0].forEach((entry) => addEditableTags(entry, "character", true));
+    response[0].forEach((entry) => addEditableTags(entry, "character2", true));
   return response;
 };

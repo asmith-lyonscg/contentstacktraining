@@ -8,7 +8,7 @@ const GalleryReact = ({ data, heading, description, showFilter, showDescription 
 
     const filterItem = (categItem: string) => {
         const updateItems = data?.filter((curElem: { powers: string[]; }) => {
-            return curElem.powers[0] === categItem[0];
+            return curElem.powers.includes(categItem);
         });
         setItems(updateItems);
         setActive(true);
@@ -44,8 +44,18 @@ const GalleryReact = ({ data, heading, description, showFilter, showDescription 
                         <h3 className="mb-3">Categories</h3>
                         <hr className="mt-0" />
                         {
-                            data?.map((data: { powers: string; }, indx: { toString: () => any; }) => {
-                                powersList.includes(data?.powers) === true ? '' : powersList.push(data?.powers)
+                            // data?.map((data: { powers: string; }, indx: { toString: () => any; }) => {
+                            //     powersList.includes(data?.powers) === true ? '' : powersList.push(data?.powers)
+                            // })
+                            data?.forEach((hero: { powers: string | string[] }) => {
+                                // Check if powers is a string; if so, split it into an array
+                                const individualPowers = typeof hero.powers === 'string' ? hero.powers.split(', ') : hero.powers;
+                                
+                                individualPowers.forEach((power: string) => {
+                                    if (!powersList.includes(power)) {
+                                        powersList.push(power.trim()); // Trim to ensure no leading/trailing spaces
+                                    }
+                                })
                             })
                         }
 
@@ -106,7 +116,7 @@ const GalleryReact = ({ data, heading, description, showFilter, showDescription 
                                                             {/* <h3 data-cslp="blog_post.blt7ca504fb3c955cc0.en-us.title" className="">The  modern Cloud Ecosystem</h3> */}
                                                             <div>
                                                                 <h5 className="card-title mb-2" {...elem.$?.title as {}}>{elem?.title}</h5>
-                                                                <div className="pb-3" {...elem.$?.powers as {}}>Power: {elem?.powers}</div>
+                                                                <div className="pb-3" {...elem.$?.powers as {}}>Power{elem?.powers.length > 0 ? 's' : ''}: {elem?.powers.join(', ')}</div>
                                                                 {
                                                                     showDescription === true ?
                                                                         <div {...elem.$?.description}>{parse(elem?.description.substr(0, 120) + '...')}</div>
